@@ -340,6 +340,7 @@ section { padding: 100px 5%; }
 .service-card {
   position: relative; overflow: hidden;
   aspect-ratio: 4/3;
+  min-height: 260px;
   cursor: pointer;
   background: var(--navy-light);
 }
@@ -411,7 +412,7 @@ section { padding: 100px 5%; }
 .s6 .card-bg { background: linear-gradient(135deg, #162d4a 0%, #0c2038 100%); }
 
 .service-card .icon-overlay {
-  position: absolute; inset: 0;
+  position: absolute; top: 0; right: 0; bottom: 0; left: 0;;
   display: flex; justify-content: center; align-items: center;
   opacity: .70;
   transition: opacity .3s;
@@ -422,6 +423,7 @@ section { padding: 100px 5%; }
   height: 100%;
   object-fit: contain;
   padding: 10%;
+  
 }
 .service-card:hover .icon-overlay { opacity: .30; }
 
