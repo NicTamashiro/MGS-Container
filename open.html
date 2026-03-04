@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container Open Top – MGS Containers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0d1b2e; --navy-mid: #132440; --navy-light: #1a3257;
+      --silver: #c8d6e5; --silver-bright: #e8eef5; --steel: #8fa8c4;
+      --accent: #4a90d9; --accent-glow: #4a90d930; --white: #ffffff; --text-muted: #7a9ab8;
+      --orange: #f97316; --orange-dim: rgba(249,115,22,0.12);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--navy); color: var(--silver-bright); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+    @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
+    @keyframes arrowBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 72px; background: rgba(13,27,46,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(249,115,22,0.12); }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); text-decoration: none; letter-spacing: .06em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back { display: flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--steel); text-decoration: none; transition: color .25s; }
+    .nav-back:hover { color: var(--orange); }
+    .nav-cta { padding: 10px 24px; border-radius: 4px; background: var(--accent); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; transition: all .25s; }
+    .nav-cta:hover { background: #5aa0e8; }
+
+    .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 5% 80px; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 55% 50%, rgba(249,115,22,0.09) 0%, transparent 70%),
+                  linear-gradient(160deg, #0d1b2e 0%, #1a0e07 60%, #06111d 100%);
+    }
+    .hero-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(249,115,22,0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(249,115,22,0.05) 1px, transparent 1px);
+      background-size: 60px 60px; animation: gridMove 20s linear infinite;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 660px; animation: fadeUp .8s ease both; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border: 1px solid rgba(249,115,22,0.4); border-radius: 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); margin-bottom: 24px; background: rgba(249,115,22,0.08); }
+    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 7vw, 90px); line-height: .95; color: var(--white); letter-spacing: .02em; margin-bottom: 20px; }
+    .hero h1 span { color: var(--orange); }
+    .hero-sub { font-size: 17px; font-weight: 300; color: var(--steel); line-height: 1.7; max-width: 520px; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { padding: 14px 32px; border-radius: 4px; background: var(--accent); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; transition: all .25s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover { background: #5aa0e8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,144,217,0.35); }
+    .btn-outline { padding: 14px 32px; border-radius: 4px; border: 1px solid rgba(200,214,229,0.3); color: var(--silver); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; transition: all .25s; background: transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+    .hero-visual { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 44%; max-width: 560px; z-index: 2; animation: fadeUp .9s .2s ease both; }
+    .hero-visual-box { background: linear-gradient(135deg, #1a0e07 0%, #0d1828 100%); border: 1px solid rgba(249,115,22,0.2); border-radius: 8px; padding: 40px; display: flex; flex-direction: column; gap: 20px; }
+
+    /* Open Top SVG-like visualization */
+    .container-viz { position: relative; height: 130px; display: flex; align-items: flex-end; justify-content: center; }
+    .c-body { width: 200px; height: 100px; background: linear-gradient(180deg, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.06) 100%); border: 2px solid rgba(249,115,22,0.4); border-top: none; border-radius: 0 0 4px 4px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .c-body-label { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: rgba(249,115,22,0.6); letter-spacing: .04em; }
+    .c-left { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: rgba(249,115,22,0.4); }
+    .c-right { position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: rgba(249,115,22,0.4); }
+    .open-arrow { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); font-size: 20px; color: var(--orange); animation: arrowBounce 1.5s ease infinite; }
+    .open-label { position: absolute; top: -44px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--orange); }
+    .c-dashed-top { position: absolute; top: 0; width: 200px; border-top: 2px dashed rgba(249,115,22,0.25); }
+
+    .visual-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+    .visual-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--white); letter-spacing: .04em; }
+    .visual-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .tag { padding: 4px 12px; border-radius: 3px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--steel); }
+    .hero-stats { display: flex; gap: 0; border-top: 1px solid rgba(249,115,22,0.12); }
+    .h-stat { flex: 1; padding: 18px 0; text-align: center; border-right: 1px solid rgba(249,115,22,0.1); }
+    .h-stat:last-child { border-right: none; }
+    .h-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--white); }
+    .h-stat-num span { color: var(--orange); font-size: 16px; }
+    .h-stat-label { font-size: 10px; color: var(--text-muted); letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+
+    section { padding: 100px 5%; }
+    .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 4vw, 56px); color: var(--white); letter-spacing: .04em; line-height: 1; }
+
+    .overview { background: var(--navy-mid); }
+    .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 60px; }
+    .overview-text p { font-size: 16px; color: var(--steel); line-height: 1.8; margin-bottom: 20px; }
+    .features-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .feat { display: flex; gap: 16px; align-items: flex-start; background: rgba(249,115,22,0.05); border: 1px solid rgba(249,115,22,0.12); border-radius: 6px; padding: 18px 22px; }
+    .feat-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .feat strong { display: block; color: var(--silver-bright); font-size: 14px; margin-bottom: 4px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: .04em; }
+    .feat p { font-size: 13px; color: var(--steel); margin: 0; line-height: 1.5; }
+
+    /* Loading methods visual */
+    .loading-card { background: var(--navy); border: 1px solid rgba(249,115,22,0.15); border-radius: 8px; padding: 36px 32px; }
+    .loading-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--white); letter-spacing: .04em; margin-bottom: 24px; }
+    .loading-methods { display: flex; flex-direction: column; gap: 16px; }
+    .lm { display: flex; gap: 16px; align-items: center; padding: 16px 18px; background: var(--navy-mid); border-radius: 6px; border: 1px solid rgba(249,115,22,0.1); }
+    .lm-icon { font-size: 28px; flex-shrink: 0; }
+    .lm h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .lm p { font-size: 12px; color: var(--steel); line-height: 1.5; margin: 0; }
+    .cover-info { margin-top: 20px; padding: 16px 20px; background: var(--orange-dim); border: 1px solid rgba(249,115,22,0.25); border-radius: 6px; font-size: 13px; color: var(--steel); line-height: 1.6; }
+    .cover-info strong { color: var(--orange); }
+
+    .uses-section { background: var(--navy); }
+    .uses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+    .use-card { background: var(--navy-mid); border: 1px solid rgba(249,115,22,0.1); border-radius: 8px; padding: 32px 28px; transition: all .3s; }
+    .use-card:hover { border-color: rgba(249,115,22,0.35); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+    .use-icon { font-size: 36px; margin-bottom: 18px; }
+    .use-card h4 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--white); letter-spacing: .04em; margin-bottom: 10px; }
+    .use-card p { font-size: 13px; color: var(--steel); line-height: 1.6; }
+
+    .specs-section { background: var(--navy-mid); }
+    .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 60px; }
+    .spec-card { background: var(--navy); border: 1px solid rgba(249,115,22,0.15); border-radius: 8px; overflow: hidden; }
+    .spec-card-header { padding: 20px 28px; background: linear-gradient(90deg, rgba(249,115,22,0.12) 0%, transparent 100%); border-bottom: 1px solid rgba(249,115,22,0.12); display: flex; align-items: center; gap: 12px; }
+    .spec-card-header h3 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--white); letter-spacing: .04em; }
+    .badge { padding: 3px 10px; border-radius: 3px; background: var(--orange); font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--white); font-weight: 700; }
+    .spec-table { width: 100%; border-collapse: collapse; }
+    .spec-table td { padding: 12px 28px; font-size: 14px; border-bottom: 1px solid rgba(249,115,22,0.07); }
+    .spec-table td:first-child { color: var(--text-muted); }
+    .spec-table td:last-child { color: var(--silver-bright); font-weight: 600; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; }
+    .spec-table tr:last-child td { border-bottom: none; }
+    .spec-table tr:hover td { background: rgba(249,115,22,0.04); }
+
+    .cta-section { background: linear-gradient(135deg, #1a0e07 0%, var(--navy-mid) 100%); border-top: 1px solid rgba(249,115,22,0.15); border-bottom: 1px solid rgba(249,115,22,0.15); padding: 80px 5%; text-align: center; }
+    .cta-section .section-title { margin: 12px 0 16px; }
+    .cta-section p { font-size: 17px; color: var(--steel); margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    footer { background: var(--navy); padding: 40px 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(74,144,217,0.1); }
+    .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--white); letter-spacing: .04em; }
+    .footer-brand span { color: var(--accent); }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--steel); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) { .hero-visual { display: none; } .overview-grid { grid-template-columns: 1fr; } .uses-grid { grid-template-columns: repeat(2,1fr); } .specs-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 540px) { .uses-grid { grid-template-columns: 1fr; } footer { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">MGS <span>Containers</span></a>
+    <a href="index.html#servicos" class="nav-back">← Todos os Serviços</a>
+    <a href="index.html#contato" class="nav-cta">Orçamento Grátis</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🏗️ Carga Especial</div>
+      <h1>Container<br><span>Open Top</span></h1>
+      <p class="hero-sub">Sem teto rígido, com abertura superior total. Ideal para maquinários, madeiras e cargas que excedem a altura padrão — com proteção de lona de PVC vedada.</p>
+      <div class="hero-actions">
+        <a href="index.html#contato" class="btn-primary">Solicitar Orçamento →</a>
+        <a href="#overview" class="btn-outline">Como funciona?</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-box">
+        <div class="container-viz">
+          <div class="c-dashed-top"></div>
+          <div class="open-label">Abertura Total</div>
+          <div class="open-arrow">↓</div>
+          <div class="c-body">
+            <div class="c-left"></div>
+            <div class="c-right"></div>
+            <div class="c-body-label">OPEN TOP</div>
+          </div>
+        </div>
+        <div>
+          <div class="visual-label">Tipo de Container</div>
+          <div class="visual-title">Open Top</div>
+          <div class="visual-tags">
+            <span class="tag">20 pés</span>
+            <span class="tag">40 pés</span>
+            <span class="tag">Maquinários</span>
+            <span class="tag">Carga Pesada</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="h-stat">
+            <div class="h-stat-num">33<span>m³</span></div>
+            <div class="h-stat-label">Vol. 20 pés</div>
+          </div>
+          <div class="h-stat">
+            <div class="h-stat-num">76<span>m³</span></div>
+            <div class="h-stat-label">Vol. 40 pés</div>
+          </div>
+          <div class="h-stat">
+            <div class="h-stat-num">28<span>t</span></div>
+            <div class="h-stat-label">Capacidade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overview" id="overview">
+    <div class="overview-grid">
+      <div class="overview-text">
+        <div class="section-label">O que é</div>
+        <div class="section-title" style="margin-bottom:28px">Quando a carga<br>não cabe pela<br>porta</div>
+        <p>O Container Open Top é um container marítimo sem teto rígido, substituído por uma lona removível e arcos removíveis. Essa abertura superior total facilita o carregamento vertical de cargas volumosas, pesadas ou com excesso de altura.</p>
+        <p>Possui portas nas extremidades para carregamento frontal convencional, e é coberto por uma lona de PVC vedada para proteger a carga contra chuva e intempéries durante o transporte.</p>
+        <div class="features-list">
+          <div class="feat"><div class="feat-icon">🏗️</div><div><strong>Abertura Superior Total</strong><p>Permite o uso de guindastes, pontes rolantes e gruas para carregamento de cima para baixo.</p></div></div>
+          <div class="feat"><div class="feat-icon">📏</div><div><strong>Carga com Excesso de Altura</strong><p>Ideal para cargas que excedem a altura interna padrão — máquinas, estruturas e peças longas.</p></div></div>
+          <div class="feat"><div class="feat-icon">🛡️</div><div><strong>Proteção por Lona de PVC</strong><p>Cobertura vedada que protege toda a carga contra chuva, vento e intempéries na viagem.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="loading-card">
+          <div class="loading-title">Métodos de Carregamento</div>
+          <div class="loading-methods">
+            <div class="lm"><div class="lm-icon">🏗️</div><div><h4>Guindaste</h4><p>Içamento pela abertura superior — ideal para maquinários de grande porte e estruturas metálicas.</p></div></div>
+            <div class="lm"><div class="lm-icon">🔧</div><div><h4>Ponte Rolante</h4><p>Perfeito para instalações industriais com pontes rolantes que precisam inserir peças pesadas verticalmente.</p></div></div>
+            <div class="lm"><div class="lm-icon">🚪</div><div><h4>Porta Frontal</h4><p>Carregamento convencional pelas portas traseiras para cargas que cabem pela entrada padrão.</p></div></div>
+          </div>
+          <div class="cover-info">
+            <strong>🧵 Cobertura:</strong> Após o carregamento, arcos removíveis são reposicionados e a lona de PVC é fixada e vedada, garantindo proteção total da carga durante todo o transporte.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="uses-section">
+    <div style="text-align:center">
+      <div class="section-label">Aplicações</div>
+      <div class="section-title">Para que serve?</div>
+    </div>
+    <div class="uses-grid">
+      <div class="use-card"><div class="use-icon">⚙️</div><h4>Maquinários Industriais</h4><p>Turbinas, compressores, prensas e equipamentos de grande porte que não cabem por portas convencionais.</p></div>
+      <div class="use-card"><div class="use-icon">🌲</div><h4>Madeira e Toras</h4><p>Toras, pranchas e estruturas de madeira de grande comprimento ou altura para o setor madeireiro.</p></div>
+      <div class="use-card"><div class="use-icon">♻️</div><h4>Sucata e Metais</h4><p>Carregamento de sucata ferrosa, alumínio e demais recicláveis com içamento por guindaste ou pá carregadeira.</p></div>
+      <div class="use-card"><div class="use-icon">🏗️</div><h4>Estruturas Metálicas</h4><p>Vigas, perfis, treliças e estruturas de aço para construção civil e projetos de engenharia.</p></div>
+      <div class="use-card"><div class="use-icon">⛏️</div><h4>Mineração</h4><p>Transporte de minérios, rochas e materiais granulados de grande volume e peso.</p></div>
+      <div class="use-card"><div class="use-icon">🚜</div><h4>Equipamentos Agrícolas</h4><p>Tratores, colheitadeiras e implementos agrícolas de grande porte para exportação ou transporte interno.</p></div>
+    </div>
+  </section>
+
+  <section class="specs-section" id="specs">
+    <div style="text-align:center; margin-bottom:60px">
+      <div class="section-label">Dimensões Técnicas</div>
+      <div class="section-title">Medidas e<br>Especificações</div>
+    </div>
+    <div class="specs-grid">
+      <div class="spec-card">
+        <div class="spec-card-header"><h3>Open Top 20 Pés</h3><span class="badge">Compacto</span></div>
+        <table class="spec-table">
+          <tr><td>Comprimento interno</td><td>5,90 m</td></tr>
+          <tr><td>Largura interna</td><td>2,30 m</td></tr>
+          <tr><td>Altura interna</td><td>2,30 m</td></tr>
+          <tr><td>Volume interno</td><td>33 m³</td></tr>
+          <tr><td>Capacidade máxima</td><td>Até 28 toneladas</td></tr>
+          <tr><td>Teto</td><td>Lona de PVC removível</td></tr>
+        </table>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card-header"><h3>Open Top 40 Pés</h3><span class="badge">Alta Capacidade</span></div>
+        <table class="spec-table">
+          <tr><td>Comprimento interno</td><td>12,00 m</td></tr>
+          <tr><td>Largura interna</td><td>2,30 m</td></tr>
+          <tr><td>Altura interna</td><td>2,30 m</td></tr>
+          <tr><td>Volume interno</td><td>76 m³</td></tr>
+          <tr><td>Capacidade máxima</td><td>+28 toneladas</td></tr>
+          <tr><td>Teto</td><td>Lona de PVC removível</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-label">Pronto para começar?</div>
+    <div class="section-title">Transporte sem<br>limites de altura</div>
+    <p>Container Open Top com entrega em todo o Brasil para maquinários, estruturas e cargas especiais. Fale conosco.</p>
+    <div class="cta-actions">
+      <a href="index.html#contato" class="btn-primary">Falar com Especialista →</a>
+      <a href="index.html#servicos" class="btn-outline">Ver Outros Modelos</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">MGS <span>Containers</span></div>
+    <p>© 2026 MGS Containers – Todos os direitos reservados</p>
+    <div class="footer-links">
+      <a href="index.html">Início</a>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#contato">Contato</a>
+    </div>
+  </footer>
+
+</body>
+</html>

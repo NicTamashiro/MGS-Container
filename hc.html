@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container High Cube (HC) – MGS Containers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0d1b2e; --navy-mid: #132440; --navy-light: #1a3257;
+      --silver: #c8d6e5; --silver-bright: #e8eef5; --steel: #8fa8c4;
+      --accent: #4a90d9; --accent-glow: #4a90d930; --white: #ffffff; --text-muted: #7a9ab8;
+      --accent2: #3ecfb0;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--navy); color: var(--silver-bright); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+    @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 72px;
+      background: rgba(13,27,46,0.95); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(74,144,217,0.15);
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); text-decoration: none; letter-spacing: .06em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back { display: flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--steel); text-decoration: none; transition: color .25s; }
+    .nav-back:hover { color: var(--accent); }
+    .nav-cta { padding: 10px 24px; border-radius: 4px; background: var(--accent); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; transition: all .25s; }
+    .nav-cta:hover { background: #5aa0e8; }
+
+    .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 5% 80px; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 55% 50%, rgba(62,207,176,0.1) 0%, transparent 70%),
+                  linear-gradient(160deg, #0d1b2e 0%, #091f1a 60%, #06111d 100%);
+    }
+    .hero-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(62,207,176,0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(62,207,176,0.05) 1px, transparent 1px);
+      background-size: 60px 60px; animation: gridMove 20s linear infinite;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 660px; animation: fadeUp .8s ease both; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border: 1px solid rgba(62,207,176,0.4); border-radius: 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent2); margin-bottom: 24px; background: rgba(62,207,176,0.08); }
+    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 7vw, 90px); line-height: .95; color: var(--white); letter-spacing: .02em; margin-bottom: 20px; }
+    .hero h1 span { color: var(--accent2); }
+    .hero-sub { font-size: 17px; font-weight: 300; color: var(--steel); line-height: 1.7; max-width: 520px; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { padding: 14px 32px; border-radius: 4px; background: var(--accent); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; transition: all .25s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover { background: #5aa0e8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,144,217,0.35); }
+    .btn-outline { padding: 14px 32px; border-radius: 4px; border: 1px solid rgba(200,214,229,0.3); color: var(--silver); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; transition: all .25s; background: transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--white); }
+
+    .hero-visual { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 44%; max-width: 560px; z-index: 2; animation: fadeUp .9s .2s ease both; }
+    .hero-visual-box { background: linear-gradient(135deg, #0e2a28 0%, #0d2035 100%); border: 1px solid rgba(62,207,176,0.2); border-radius: 8px; padding: 48px 40px; display: flex; flex-direction: column; gap: 24px; }
+    .visual-icon { font-size: 56px; line-height: 1; }
+    .visual-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent2); margin-bottom: 8px; }
+    .visual-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--white); letter-spacing: .04em; }
+    .visual-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .tag { padding: 4px 12px; border-radius: 3px; background: rgba(62,207,176,0.1); border: 1px solid rgba(62,207,176,0.2); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--steel); }
+    .hero-stats { display: flex; gap: 0; border-top: 1px solid rgba(62,207,176,0.15); margin-top: 8px; }
+    .h-stat { flex: 1; padding: 20px 0; text-align: center; border-right: 1px solid rgba(62,207,176,0.12); }
+    .h-stat:last-child { border-right: none; }
+    .h-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--white); letter-spacing: .04em; }
+    .h-stat-num span { color: var(--accent2); font-size: 18px; }
+    .h-stat-label { font-size: 11px; color: var(--text-muted); letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+
+    section { padding: 100px 5%; }
+    .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent2); margin-bottom: 12px; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 4vw, 56px); color: var(--white); letter-spacing: .04em; line-height: 1; }
+
+    /* HEIGHT COMPARISON */
+    .compare-section { background: var(--navy-mid); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 60px; }
+    .compare-text p { font-size: 16px; color: var(--steel); line-height: 1.8; margin-bottom: 20px; }
+    .compare-features { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .feat { display: flex; gap: 16px; align-items: flex-start; background: rgba(62,207,176,0.05); border: 1px solid rgba(62,207,176,0.12); border-radius: 6px; padding: 18px 22px; }
+    .feat-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .feat strong { display: block; color: var(--silver-bright); font-size: 14px; margin-bottom: 4px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: .04em; }
+    .feat p { font-size: 13px; color: var(--steel); margin: 0; line-height: 1.5; }
+
+    /* HEIGHT VISUAL */
+    .height-visual { display: flex; align-items: flex-end; justify-content: center; gap: 32px; padding: 40px; background: var(--navy); border: 1px solid rgba(62,207,176,0.15); border-radius: 8px; }
+    .bar-group { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .bar { width: 80px; border-radius: 4px 4px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 10px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--white); letter-spacing: .04em; }
+    .bar-standard { height: 180px; background: linear-gradient(180deg, rgba(74,144,217,0.4) 0%, rgba(74,144,217,0.2) 100%); border: 1px solid rgba(74,144,217,0.3); }
+    .bar-hc { height: 210px; background: linear-gradient(180deg, rgba(62,207,176,0.5) 0%, rgba(62,207,176,0.25) 100%); border: 1px solid rgba(62,207,176,0.4); }
+    .bar-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); text-align: center; }
+    .bar-label strong { display: block; color: var(--silver-bright); font-size: 14px; }
+    .diff-badge { background: rgba(62,207,176,0.15); border: 1px solid rgba(62,207,176,0.3); border-radius: 4px; padding: 6px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent2); margin-top: 8px; }
+
+    .specs-section { background: var(--navy); }
+    .spec-card { background: var(--navy-mid); border: 1px solid rgba(62,207,176,0.15); border-radius: 8px; overflow: hidden; max-width: 600px; margin: 60px auto 0; }
+    .spec-card-header { padding: 20px 28px; background: linear-gradient(90deg, rgba(62,207,176,0.12) 0%, transparent 100%); border-bottom: 1px solid rgba(62,207,176,0.15); display: flex; align-items: center; gap: 12px; }
+    .spec-card-header h3 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--white); letter-spacing: .04em; }
+    .badge { padding: 3px 10px; border-radius: 3px; background: var(--accent2); font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); font-weight: 700; }
+    .spec-table { width: 100%; border-collapse: collapse; }
+    .spec-table td { padding: 14px 28px; font-size: 14px; border-bottom: 1px solid rgba(74,144,217,0.08); }
+    .spec-table td:first-child { color: var(--text-muted); }
+    .spec-table td:last-child { color: var(--silver-bright); font-weight: 600; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: .03em; }
+    .spec-table tr:last-child td { border-bottom: none; }
+    .spec-table tr:hover td { background: rgba(62,207,176,0.04); }
+
+    .uses-section { background: var(--navy-mid); }
+    .uses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+    .use-card { background: var(--navy); border: 1px solid rgba(62,207,176,0.1); border-radius: 8px; padding: 32px 28px; transition: all .3s; }
+    .use-card:hover { border-color: rgba(62,207,176,0.3); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+    .use-icon { font-size: 36px; margin-bottom: 18px; }
+    .use-card h4 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--white); letter-spacing: .04em; margin-bottom: 10px; }
+    .use-card p { font-size: 13px; color: var(--steel); line-height: 1.6; }
+
+    .cta-section { background: linear-gradient(135deg, #0e2a28 0%, var(--navy-mid) 100%); border-top: 1px solid rgba(62,207,176,0.15); border-bottom: 1px solid rgba(62,207,176,0.15); padding: 80px 5%; text-align: center; }
+    .cta-section .section-title { margin: 12px 0 16px; }
+    .cta-section p { font-size: 17px; color: var(--steel); margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    footer { background: var(--navy); padding: 40px 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(74,144,217,0.1); }
+    .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--white); letter-spacing: .04em; }
+    .footer-brand span { color: var(--accent); }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--steel); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) { .hero-visual { display: none; } .compare-grid { grid-template-columns: 1fr; } .uses-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .uses-grid { grid-template-columns: 1fr; } footer { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">MGS <span>Containers</span></a>
+    <a href="index.html#servicos" class="nav-back">← Todos os Serviços</a>
+    <a href="index.html#contato" class="nav-cta">Orçamento Grátis</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">📦 Portfólio MGS Containers</div>
+      <h1>Container<br><span>High Cube</span></h1>
+      <p class="hero-sub">30 centímetros a mais de altura que o container padrão. Ideal para cargas volumosas, projetos arquitetônicos e soluções que exigem espaço vertical extra.</p>
+      <div class="hero-actions">
+        <a href="index.html#contato" class="btn-primary">Solicitar Orçamento →</a>
+        <a href="#compare" class="btn-outline">Ver Comparativo</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-box">
+        <div><div class="visual-icon">🔝</div></div>
+        <div>
+          <div class="visual-label">Tipo de Container</div>
+          <div class="visual-title">High Cube (HC)</div>
+          <div class="visual-tags">
+            <span class="tag">40 pés</span>
+            <span class="tag">+30cm Altura</span>
+            <span class="tag">Carga Volumosa</span>
+            <span class="tag">Arquitetura</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="h-stat">
+            <div class="h-stat-num">2,70<span>m</span></div>
+            <div class="h-stat-label">Altura Int.</div>
+          </div>
+          <div class="h-stat">
+            <div class="h-stat-num">76<span>m³</span></div>
+            <div class="h-stat-label">Volume</div>
+          </div>
+          <div class="h-stat">
+            <div class="h-stat-num">28<span>t</span></div>
+            <div class="h-stat-label">Capacidade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-section" id="compare">
+    <div class="compare-grid">
+      <div class="compare-text">
+        <div class="section-label">O que é</div>
+        <div class="section-title" style="margin-bottom:28px">A altura que<br>faz a diferença</div>
+        <p>O Container High Cube possui altura adicional de aproximadamente 30cm em relação ao container padrão Dry. Essa diferença pode parecer pequena, mas representa um impacto enorme para cargas volumosas e projetos especiais.</p>
+        <p>Ideal para projetos arquitetônicos de habitação e uso comercial, permitindo instalação de forro, piso elevado e sistema elétrico sem comprometer o pé-direito interno.</p>
+        <div class="compare-features">
+          <div class="feat"><div class="feat-icon">📐</div><div><strong>2,70m de Altura Interna</strong><p>30cm a mais que o container padrão (2,39m), aumentando o volume útil para 76,4 m³.</p></div></div>
+          <div class="feat"><div class="feat-icon">🏠</div><div><strong>Projetos Arquitetônicos</strong><p>Permite forro, piso técnico e instalações sem perder conforto de pé-direito nos projetos modulares.</p></div></div>
+          <div class="feat"><div class="feat-icon">📦</div><div><strong>Cargas Voluminosas</strong><p>Acomoda mercadorias de grande volume ou altura que não caberiam em containers padrão.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="height-visual">
+          <div class="bar-group">
+            <div class="bar bar-standard">2,39m</div>
+            <div class="bar-label"><strong>Dry Padrão</strong>40 pés</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:48px">
+            <div class="diff-badge">+30cm</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar bar-hc">2,70m</div>
+            <div class="bar-label"><strong>High Cube</strong>40 pés</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="specs-section" id="specs">
+    <div style="text-align:center">
+      <div class="section-label">Dimensões Técnicas</div>
+      <div class="section-title">Medidas e<br>Especificações</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <h3>Container HC 40 Pés</h3>
+        <span class="badge">Altura Extra</span>
+      </div>
+      <table class="spec-table">
+        <tr><td>Comprimento interno</td><td>12,00 m</td></tr>
+        <tr><td>Largura interna</td><td>2,35 m</td></tr>
+        <tr><td>Altura interna</td><td>2,70 m</td></tr>
+        <tr><td>Volume interno</td><td>76,4 m³</td></tr>
+        <tr><td>Capacidade máxima</td><td>Até 28 toneladas</td></tr>
+        <tr><td>Diferencial de altura</td><td>+30 cm vs. Dry padrão</td></tr>
+        <tr><td>Regulamentação</td><td>Conforme local</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="uses-section">
+    <div style="text-align:center">
+      <div class="section-label">Aplicações</div>
+      <div class="section-title">Para que serve?</div>
+    </div>
+    <div class="uses-grid">
+      <div class="use-card"><div class="use-icon">🏘️</div><h4>Habitação Modular</h4><p>Projetos residenciais com pé-direito confortável após instalação de forro e piso técnico.</p></div>
+      <div class="use-card"><div class="use-icon">🏢</div><h4>Escritórios Container</h4><p>Ambientes corporativos modernos com instalações elétricas e climatização sem comprometer altura.</p></div>
+      <div class="use-card"><div class="use-icon">🍔</div><h4>Food Trucks e Lanchonetes</h4><p>Espaço extra para exaustores, coifas e equipamentos de cozinha industrial.</p></div>
+      <div class="use-card"><div class="use-icon">🎨</div><h4>Galerias e Estúdios</h4><p>Espaços criativos, ateliês e galerias de arte com mais amplitude vertical.</p></div>
+      <div class="use-card"><div class="use-icon">📦</div><h4>Cargas Volumosas</h4><p>Mercadorias de grande altura que ultrapassam o limite do container Dry padrão.</p></div>
+      <div class="use-card"><div class="use-icon">🔩</div><h4>Equipamentos Industriais</h4><p>Transporte de maquinários, estruturas metálicas e peças de grande porte vertical.</p></div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-label">Pronto para começar?</div>
+    <div class="section-title">Solicite seu<br>Orçamento</div>
+    <p>Aproveite a altura extra do HC para o seu projeto. Nossa equipe encontra o modelo ideal com entrega em todo o Brasil.</p>
+    <div class="cta-actions">
+      <a href="index.html#contato" class="btn-primary">Falar com Especialista →</a>
+      <a href="index.html#servicos" class="btn-outline">Ver Outros Modelos</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">MGS <span>Containers</span></div>
+    <p>© 2026 MGS Containers – Todos os direitos reservados</p>
+    <div class="footer-links">
+      <a href="index.html">Início</a>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#contato">Contato</a>
+    </div>
+  </footer>
+
+</body>
+</html>
