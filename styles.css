@@ -665,7 +665,7 @@ footer p { font-size: 13px; color: var(--text-muted); }
 }
 
 /* ══════════════ RESPONSIVE ══════════════ */
-@media (max-width: 1024px) {
+@media (max-width: 1025px) {
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
