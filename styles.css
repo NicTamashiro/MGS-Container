@@ -321,8 +321,20 @@ section { padding: 100px 5%; }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 3px;
+}
+
+.services-grid .service-card:nth-child(-n+3) {
+  grid-column: span 2;
+}
+
+.services-grid .service-card:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.services-grid .service-card:nth-child(5) {
+  grid-column: 4 / span 2;
 }
 
 .service-card {
@@ -654,7 +666,22 @@ footer p { font-size: 13px; color: var(--text-muted); }
 
 /* ══════════════ RESPONSIVE ══════════════ */
 @media (max-width: 1024px) {
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .services-grid .service-card:nth-child(-n+3),
+  .services-grid .service-card:nth-child(4),
+  .services-grid .service-card:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  /* Card 3 sozinho: centraliza ocupando metade e se posicionando no meio */
+  .services-grid .service-card:nth-child(3) {
+    grid-column: 1 / span 1;
+    justify-self: center;
+    width: 100%;
+  }
   .why-grid { grid-template-columns: 1fr; gap: 48px; }
   .why-visual { height: 300px; }
   .mvv-grid { grid-template-columns: 1fr; }
