@@ -654,6 +654,10 @@ footer p { font-size: 13px; color: var(--text-muted); }
   color: var(--accent);
 }
 
+.link-whats{
+  color: rgb(0, 140, 255);
+}
+
 
 /* ══════════════ WHATSAPP BTN ══════════════ */
 .wa-float {
