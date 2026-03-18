@@ -121,7 +121,7 @@ nav.scrolled {
     linear-gradient(160deg, #0d1b2e 0%, #0a1520 60%, #06111d 100%);
 }
 
-.hero-bg::before {
+/* .hero-bg::before {
   content: '';
   position: absolute; inset: 0;
   background-image:
@@ -129,7 +129,7 @@ nav.scrolled {
     linear-gradient(90deg, rgba(74,144,217,0.07) 1px, transparent 1px);
   background-size: 60px 60px;
   animation: gridMove 20s linear infinite;
-}
+} */
 
 @keyframes gridMove {
   0% { background-position: 0 0; }
