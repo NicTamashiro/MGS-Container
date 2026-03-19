@@ -41,6 +41,19 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMobileMenu();
 });
 
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  if (menu.classList.contains('open')) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+}
+
+document.getElementById('mobileMenu').addEventListener('click', function (e) {
+  if (e.target === this) closeMobileMenu();
+});
+
 // ══════════════ FORM SUBMIT ══════════════
 function submitForm() {
   const inputs = document.querySelectorAll('.contact-form input, .contact-form select, .contact-form textarea');
