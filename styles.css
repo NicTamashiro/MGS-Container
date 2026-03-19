@@ -624,6 +624,17 @@ section { padding: 100px 5%; }
 .form-group select option { background: var(--navy-mid); color: var(--silver-bright); }
 .form-submit { width: 100%; }
 
+/* ══ BOTÃO DESABILITADO ══ */
+.contact-form button[type="submit"]:disabled {
+  background: var(--navy-light);
+  color: var(--text-muted);
+  border: 1px solid rgba(74,144,217,0.15);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
 /* ══════════════ FOOTER ══════════════ */
 footer {
   background: var(--navy);

@@ -62,3 +62,24 @@ function submitForm() {
   alert('✅ Mensagem enviada com sucesso! Nossa equipe entrará em contato em breve.');
   inputs.forEach(input => input.value = '');
 }
+
+// ══════════════ FORM VALIDATION – BOTÃO DESABILITADO ATÉ PREENCHER TUDO ══════════════
+(function () {
+  const form = document.querySelector('.contact-form form');
+  if (!form) return;
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const fields = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
+
+  function checkForm() {
+    const allFilled = [...fields].every(f => f.value.trim() !== '');
+    submitBtn.disabled = !allFilled;
+  }
+
+  // Estado inicial: desabilitado
+  checkForm();
+
+  // Reavalia a cada digitação/seleção
+  fields.forEach(f => f.addEventListener('input', checkForm));
+  fields.forEach(f => f.addEventListener('change', checkForm));
+})();
