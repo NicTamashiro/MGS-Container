@@ -89,14 +89,24 @@ nav.scrolled {
 
 /* ══════════════ MOBILE MENU ══════════════ */
 .mobile-menu {
-  display: none; position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0; /* ← substitui inset: 0 */
+  display: flex; position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
   z-index: 999;
   background: var(--navy-mid);
   flex-direction: column; align-items: center; justify-content: center;
   gap: 32px;
+  
+  /* Esconde sem usar display:none */
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s, visibility .3s;
 }
-.mobile-menu.open { display: flex; }
+.mobile-menu.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: all;
+}
 .mobile-menu a {
   font-family: 'Bebas Neue', sans-serif; font-size: 36px;
   color: var(--silver-bright); text-decoration: none; transition: color .25s;
