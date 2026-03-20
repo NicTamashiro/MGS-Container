@@ -1,3 +1,39 @@
+// ══════════════ PORTO SLIDER ══════════════
+(function () {
+  const slides = document.querySelectorAll('.porto-slider .slide');
+  const dots   = document.querySelectorAll('.porto-slider .dot');
+  if (!slides.length) return;
+ 
+  let current = 0;
+  let timer;
+ 
+  function goToSlide(idx) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    resetTimer();
+  }
+ 
+  function nextSlide() { goToSlide(current + 1); }
+  function prevSlide() { goToSlide(current - 1); }
+ 
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(nextSlide, 5500);
+  }
+ 
+  // expose to onclick handlers
+  window.goToSlide = goToSlide;
+  window.nextSlide = nextSlide;
+  window.prevSlide = prevSlide;
+ 
+  resetTimer();
+})();
+
+
+
 // ══════════════ NAV SCROLL ══════════════
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
